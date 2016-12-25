@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>FretScale View</title>
+        <meta name="description" content="FretScale is a visualisation of a guitar's (or a guitar-like instrument's) fretboard. It aims to help learners to identify shapes based on a given root pitch and musical scale/mode." />
+        <link rel="image_src" href="http://betamini.abcruz.com/fretscale-view/fretscale-view.png" />
+        <link rel="stylesheet" href="static/css/fret-scale-view.css" />
+        <script src="static/js/jquery-3.1.1.min.js"></script>
+        <script src="static/js/fret-scale-view-control.js"></script>
+    </head>
+    <body>
+        <h1>FretScale View <span></span></h1>
+        
+        <section>
+            <h2 class="no-show">Fret Board</h2>
+            <table id="fret-board"></table>
+        </section/>
+        
+        <div class="controls">
+            <section>
+                <h2>Tuning</h2>
+                <form id="def-tuning" action="#" method="get">
+                    <div></div>
+                    <hr />
+                    <input id="def-add-string" type="button" value="Add String" />
+                    <br />
+                    <input id="def-tuning-set" type="button" value="Set Tuning" />
+                </form>
+            </section>
+            
+            <section>
+                <h2>Key Settings</h2>
+                <form id="def-key" action="#" method="get">
+                    <select id="def-key-root"></select>
+                    <select id="def-key-preset"></select>
+                    <hr />
+                    <input id="def-key-root-set" type="button" value="Set Fretboard Display" />
+                </form>
+            </section>
+            
+            <section id="about">
+                <h2>About</h2>
+                <p>FretScale is a visualisation of a guitar's (or a guitar-like instrument's) fretboard. It aims to help learners to identify shapes based on a given root pitch and musical scale/mode.</p>
+                <p><strong>Tuning</strong>: select the each string pitch in the form in the right of the page. Click the [x] button to remove a string or [Add String] to add a string. Click the [Set Tuning] button when done.</p>
+                <p><strong>Key Settings</strong>: select a root pitch from the drop down in the form at the middle of the page. Then select a scale or mode for the chosen root from the other drop down. Click the [Set Fretboard Display] button when done.</p>
+                <p>Please send your comments and suggestions to <strong>arielle.cruz@gmail.com</strong></p>
+            </section>
+        </div>
+    </body>
+</html>

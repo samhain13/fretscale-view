@@ -1,0 +1,85 @@
+body {
+    font-family: sans-serif;
+    margin: auto;
+    width: 900px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+hr {
+    border: 0px;
+    border-top: 1px rgb(220,220,220) solid;
+}
+
+p { font-size: 12px; }
+
+td {
+    border: 1px rgb(200,200,200) solid;
+    color: rgb(150,150,150);
+    font-size: 12px;
+    height: 16px;
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+}
+    td:first-child { width: 16px; }
+
+tr:first-child td, tr:last-child td {
+    border: 0px;
+    color: rgb(50,50,50);
+}
+
+select {
+    font-size: 12px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    width: 80px;
+}
+    #def-key-preset { width: 160px; }
+
+input {
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+
+.active {
+    background: rgb(200,200,0);
+    color: rgb(100,100,100);
+}
+
+.active-root {
+    background: rgb(0,100,0);
+    color: rgb(255,255,255);
+}
+
+
+.controls {
+    display: flex;
+}
+    .controls > section {
+        border-right: 1px rgb(220,220,220) solid;
+        margin-right: 20px;
+        padding-right: 20px;
+    }
+    
+    .controls #about {
+        border-right: 0px;
+        width: 40%;
+    }
+
+.no-show {
+    left: -10000px;
+    margin: 0px;
+    position: absolute;
+    top: -10000px;
+}
