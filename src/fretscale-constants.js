@@ -1,6 +1,4 @@
 const PITCH_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-export {PITCH_NAMES};
-
 const FORMULAE = [
     {
         'name': 'Major / Ionian',
@@ -39,4 +37,6 @@ const FORMULAE = [
          'items': [0, 1, 3, 5, 6, 8, 10]
      }
 ];
+
+export {PITCH_NAMES};
 export {FORMULAE};
