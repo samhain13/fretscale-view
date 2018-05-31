@@ -18,9 +18,9 @@ class Fretboard extends React.Component {
     }
     
     getMarkerValue(fret_number) {
-        if ([3, 5, 7, 9].indexOf(fret_number) >= 0) {
+        if ([4, 6, 8, 10].indexOf(fret_number) >= 0) {
             return '•';
-        } else if (fret_number === 12) {
+        } else if (fret_number === Number(this.props.app.props.show_frets)) {
             return '••';
         } else {
             return '';
@@ -28,11 +28,13 @@ class Fretboard extends React.Component {
     }
 
     renderMarkers() {
-        let frets = Array(Number(this.props.app.props.show_frets)).fill(null);
+        let frets = Array(Number(this.props.app.props.show_frets) + 1).fill(null);
         return(
             <tr>
             {frets.map((value, index) =>
-                <td key={index} className='fret-marker'>{this.getMarkerValue(index)}</td>
+                <td key={index} className='fret-marker'>
+                    {this.getMarkerValue(index)}
+                </td>
             )}
             </tr>
         );
@@ -42,6 +44,7 @@ class Fretboard extends React.Component {
         let frets = this.props.app.getPitchArray(pitch);
         return(
             <tr key={index}>
+                <td>Tune</td>
             {frets.map((pitch_name, fret_index) =>
                 <td
                     key={fret_index}
@@ -78,43 +81,42 @@ class Fretboard extends React.Component {
 }
 
 
-class Tuning extends React.Component {
-    render() {
-        return(
-            <section id="tuning">
-                <h2>Tuning</h2>
-            </section>
-        );
-    }
-}
-
-
 class KeyModeSettings extends React.Component {
     render() {
         return (
             <section id="key-settings">
                 <h2>Key/Mode Settings</h2>
                 <form action="." method="get">
-                    <select id="choose-pitch" name="choose-pitch">
-                    {PITCH_NAMES.map((name, index) =>
-                        <option
-                            key={index}
-                            onClick={() => this.props.app.applyPitchNameSettings(index)}
-                        >
-                            {name}
-                        </option>
-                    )}
-                    </select>
-                    <select id="choose-mode" name="choose-mode">
-                    {FORMULAE.map((item, index) => 
-                        <option
-                            key={index}
-                            onClick={() => this.props.app.applyKeyModeSettings(item)}
-                        >
-                            {item.name}
-                        </option>
-                     )}
-                    </select>
+                    <div class="form-group">
+                        <label for="choose-Key">Key</label>
+                        <br />
+                        <select id="choose-key" name="choose-key">
+                        {PITCH_NAMES.map((name, index) =>
+                            <option
+                                key={index}
+                                onClick={() =>
+                                this.props.app.applyPitchNameSettings(index)}
+                            >
+                                {name}
+                            </option>
+                        )}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="choose-mode">Mode</label>
+                        <br />
+                        <select id="choose-mode" name="choose-mode">
+                        {FORMULAE.map((item, index) => 
+                            <option
+                                key={index}
+                                onClick={() =>
+                                this.props.app.applyKeyModeSettings(item)}
+                            >
+                                {item.name}
+                            </option>
+                         )}
+                        </select>
+                    </div>
                  </form>
             </section>
         );
@@ -192,7 +194,6 @@ class FretScaleApp extends React.Component {
                         this.state.pitch_name + ' ' + this.state.key_mode.name
                     }
                 />
-                <Tuning app={this} />
                 <KeyModeSettings app={this} />
             </div>
         );

@@ -13,6 +13,11 @@ body {
     background: rgb(100,200,100);
 }
 
+.form-group {
+    display: inline-block;
+    padding: 0px 5px;
+}
+
 #fretboard table {
     font-size: 0.9em;
     overflow: auto;
@@ -25,7 +30,9 @@ body {
     height: 3em;
     width: 3em;
 }
-#fretboard td:first-child, #fretboard td:last-child {
+#fretboard td:first-child,
+#fretboard td:nth-of-type(2),
+#fretboard td:last-child {
     width: 1em;
 }
 #fretboard td.fret-marker {
