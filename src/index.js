@@ -134,34 +134,40 @@ class FretScaleApp extends React.Component {
     }
     
     applyKeyModeSettings(formula) {
-        let active_pitches = this.getActivePitches(this.state.pitch_name);
         this.setState({
-            active_pitches: active_pitches,
+            active_pitches: this.getActivePitches(
+                this.state.pitch_name,
+                formula
+            ),
             key_mode: formula
         });
     }
     
     applyPitchNameSettings(index) {
         this.setState({
-            active_pitches: this.getActivePitches(PITCH_NAMES[index]),
+            active_pitches: this.getActivePitches(
+                PITCH_NAMES[index],
+                this.state.key_mode
+            ),
             pitch_name: PITCH_NAMES[index],
         })
     }
     
     componentDidMount() {
         this.setState({
-            active_pitches: this.getActivePitches(this.state.pitch_name) 
+            active_pitches: this.getActivePitches(
+                this.state.pitch_name,
+                this.state.key_mode
+            ) 
         });
     }
 
-    getActivePitches() {
-        let pitches = this.getPitchArray(this.state.pitch_name);
+    getActivePitches(pitch_name, formula) {
+        let pitches = this.getPitchArray(pitch_name);
         let active_pitches = [];
-        for (let i=0; i < this.state.key_mode.items.length; i++ ) {
-            active_pitches.push(pitches[this.state.key_mode.items[i]]);
+        for (let i=0; i < formula.items.length; i++ ) {
+            active_pitches.push(pitches[formula.items[i]]);
         }
-        // console.log(pitches);
-        // console.log(active_pitches);
         return active_pitches;
     }
     
