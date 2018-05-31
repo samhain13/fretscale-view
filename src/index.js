@@ -16,17 +16,37 @@ class Fretboard extends React.Component {
             return 'inactive-pitch';
         }
     }
+    
+    getMarkerValue(fret_number) {
+        if ([3, 5, 7, 9].indexOf(fret_number) >= 0) {
+            return '•';
+        } else if (fret_number === 12) {
+            return '••';
+        } else {
+            return '';
+        }
+    }
+
+    renderMarkers() {
+        let frets = Array(Number(this.props.app.props.show_frets)).fill(null);
+        return(
+            <tr>
+            {frets.map((value, index) =>
+                <td key={index} className='fret-marker'>{this.getMarkerValue(index)}</td>
+            )}
+            </tr>
+        );
+    }
 
     renderString(pitch, index) {
         let frets = this.props.app.getPitchArray(pitch);
-        
         return(
             <tr key={index}>
             {frets.map((pitch_name, fret_index) =>
                 <td
                     key={fret_index}
                     className={this.getFretClassName(pitch_name)}
-                    >
+                >
                     {pitch_name}
                 </td>
             )}
@@ -44,9 +64,11 @@ class Fretboard extends React.Component {
                 </h2>
                 <table>
                     <tbody>
+                    {this.renderMarkers()}
                     {this.props.app.state.tuning.map((pitch, index) =>
                         this.renderString(pitch, index)
                     )}
+                    {this.renderMarkers()}
                     </tbody>
                 </table>
             </section>
@@ -76,7 +98,8 @@ class KeyModeSettings extends React.Component {
                     {PITCH_NAMES.map((name, index) =>
                         <option
                             key={index}
-                            onClick={() => this.props.app.applyPitchNameSettings(index)}>
+                            onClick={() => this.props.app.applyPitchNameSettings(index)}
+                        >
                             {name}
                         </option>
                     )}
@@ -85,7 +108,8 @@ class KeyModeSettings extends React.Component {
                     {FORMULAE.map((item, index) => 
                         <option
                             key={index}
-                            onClick={() => this.props.app.applyKeyModeSettings(item)}>
+                            onClick={() => this.props.app.applyKeyModeSettings(item)}
+                        >
                             {item.name}
                         </option>
                      )}

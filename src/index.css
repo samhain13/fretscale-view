@@ -15,6 +15,7 @@ body {
 
 #fretboard table {
     font-size: 0.9em;
+    overflow: auto;
     text-align: center;
     vertical-align: middle;
     width: 100%;
@@ -26,4 +27,8 @@ body {
 }
 #fretboard td:first-child, #fretboard td:last-child {
     width: 1em;
+}
+#fretboard td.fret-marker {
+    font-size: 2em;
+    height: 1em;
 }
