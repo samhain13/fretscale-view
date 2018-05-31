@@ -49,10 +49,36 @@ class Fretboard extends React.Component {
                     key={fret_index}
                     className={this.getFretClassName(pitch_name)}
                 >
-                    {pitch_name}
+                    {
+                        (fret_index === 0) ?
+                        this.renderTuner(pitch_name, fret_index, index) :
+                        pitch_name
+                    }
                 </td>
             )}
             </tr>
+        );
+    }
+
+    renderTuner(pitch_name, fret_index, index) {
+        let true_index = this.props.app.state.tuning.length - index - 1;
+        return(
+            <form action="." method="get">
+                <select id={'tuner' + fret_index} name="tuner">
+                {PITCH_NAMES.map((name, pitch_index) =>
+                    <option
+                        key={pitch_index}
+                        selected={(name === pitch_name) ? 'selected' : false}
+                        onClick={
+                            () =>
+                            this.props.app.applyTuning(true_index, name)
+                        }
+                    >
+                        {name}
+                    </option>
+                )}
+                </select>
+            </form>
         );
     }
 
@@ -152,6 +178,12 @@ class FretScaleApp extends React.Component {
             ),
             pitch_name: PITCH_NAMES[index],
         })
+    }
+
+    applyTuning(index, pitch_name) {
+        let tuning = this.state.tuning.slice();
+        tuning[index] = pitch_name;
+        this.setState({tuning: tuning});
     }
     
     componentDidMount() {
