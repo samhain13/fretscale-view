@@ -6,6 +6,34 @@ import './index.css';
 
 
 class Fretboard extends React.Component {
+    getFretClassName(pitch_name) {
+        let index = this.props.app.state.active_pitches.indexOf(pitch_name);
+        if (index === 0) {
+            return 'root-pitch';
+        } else if (index > 0) {
+            return 'active-pitch';
+        } else {
+            return 'inactive-pitch';
+        }
+    }
+
+    renderString(pitch, index) {
+        let frets = this.props.app.getPitchArray(pitch);
+        
+        return(
+            <tr key={index}>
+            {frets.map((pitch_name, fret_index) =>
+                <td
+                    key={fret_index}
+                    className={this.getFretClassName(pitch_name)}
+                    >
+                    {pitch_name}
+                </td>
+            )}
+            </tr>
+        );
+    }
+
     render() {
         return(
             <section id="fretboard">
@@ -14,6 +42,13 @@ class Fretboard extends React.Component {
                     <br />
                     {this.props.fretboard_title}
                 </h2>
+                <table>
+                    <tbody>
+                    {this.props.app.state.tuning.map((pitch, index) =>
+                        this.renderString(pitch, index)
+                    )}
+                    </tbody>
+                </table>
             </section>
         );
     }
@@ -66,22 +101,53 @@ class FretScaleApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pitch_index: 0,
-            pitch_name: PITCH_NAMES[0],
+            active_pitches: [],
             key_mode: FORMULAE[0],
+            pitch_name: PITCH_NAMES[0],
             tuning: ['E', 'A', 'D', 'G', 'B', 'E'],
         }
     }
     
     applyKeyModeSettings(formula) {
-        this.setState({key_mode: formula});
+        let active_pitches = this.getActivePitches(this.state.pitch_name);
+        this.setState({
+            active_pitches: active_pitches,
+            key_mode: formula
+        });
     }
     
     applyPitchNameSettings(index) {
         this.setState({
-            pitch_index: index,
+            active_pitches: this.getActivePitches(PITCH_NAMES[index]),
             pitch_name: PITCH_NAMES[index],
         })
+    }
+    
+    componentDidMount() {
+        this.setState({
+            active_pitches: this.getActivePitches(this.state.pitch_name) 
+        });
+    }
+
+    getActivePitches() {
+        let pitches = this.getPitchArray(this.state.pitch_name);
+        let active_pitches = [];
+        for (let i=0; i < this.state.key_mode.items.length; i++ ) {
+            active_pitches.push(pitches[this.state.key_mode.items[i]]);
+        }
+        return active_pitches;
+    }
+    
+    getPitchArray(pitch_name) {
+        let pitches = []
+        let limit = PITCH_NAMES.length;
+        let j = PITCH_NAMES.indexOf(pitch_name);
+        for (let i=0; i<this.props.show_frets; i++) {
+            let num = i + j;
+            if (num >= limit) num = num - limit;
+            pitches.push(PITCH_NAMES[num]);
+        }
+        return pitches;
     }
 
     render() {
@@ -93,12 +159,8 @@ class FretScaleApp extends React.Component {
                         this.state.pitch_name + ' ' + this.state.key_mode.name
                     }
                 />
-                <Tuning
-                    app={this}
-                />
-                <KeyModeSettings
-                    app={this}
-                />
+                <Tuning app={this} />
+                <KeyModeSettings app={this} />
             </div>
         );
     }
@@ -106,6 +168,8 @@ class FretScaleApp extends React.Component {
 
 
 ReactDOM.render(
-    <FretScaleApp />,
+    <FretScaleApp
+        show_frets="13"
+    />,
     document.getElementById('root')
 );
