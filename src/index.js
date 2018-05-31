@@ -55,6 +55,7 @@ class Fretboard extends React.Component {
     }
 
     render() {
+        let strings = this.props.app.state.tuning.slice().reverse();
         return(
             <section id="fretboard">
                 <h2>
@@ -65,7 +66,7 @@ class Fretboard extends React.Component {
                 <table>
                     <tbody>
                     {this.renderMarkers()}
-                    {this.props.app.state.tuning.map((pitch, index) =>
+                    {strings.map((pitch, index) =>
                         this.renderString(pitch, index)
                     )}
                     {this.renderMarkers()}
@@ -159,6 +160,8 @@ class FretScaleApp extends React.Component {
         for (let i=0; i < this.state.key_mode.items.length; i++ ) {
             active_pitches.push(pitches[this.state.key_mode.items[i]]);
         }
+        // console.log(pitches);
+        // console.log(active_pitches);
         return active_pitches;
     }
     
