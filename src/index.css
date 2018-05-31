@@ -17,6 +17,16 @@ body {
     display: inline-block;
     padding: 0px 5px;
 }
+.tuner-form {
+    display: flex;
+    width: 100%;
+}
+.tuner-form > select {
+    flex-grow: 2;
+}
+.tuner-form > input {
+    flex-grow: 1;
+}
 
 #fretboard table {
     font-size: 0.9em;
@@ -30,14 +40,10 @@ body {
     height: 3em;
     width: 3em;
 }
-#fretboard td:first-child,
 #fretboard td:last-child {
     width: 1em;
 }
 #fretboard td.fret-marker {
     font-size: 2em;
     height: 1em;
-}
-#fretboard td select {
-    width: 100%;
 }

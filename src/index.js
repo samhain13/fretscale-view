@@ -63,27 +63,38 @@ class Fretboard extends React.Component {
     renderTuner(pitch_name, fret_index, index) {
         let true_index = this.props.app.state.tuning.length - index - 1;
         return(
-            <form action="." method="get">
-                <select id={'tuner' + fret_index} name="tuner">
+            <form action="." method="get" className="tuner-form">
+                <select
+                    id={'tuner' + true_index}
+                    name="tuner"
+                    defaultValue={pitch_name}
+                >
                 {PITCH_NAMES.map((name, pitch_index) =>
                     <option
                         key={pitch_index}
-                        selected={(name === pitch_name) ? 'selected' : false}
                         onClick={
-                            () =>
-                            this.props.app.applyTuning(true_index, name)
+                            () => this.props.app.applyTuning(true_index, name)
                         }
                     >
                         {name}
                     </option>
                 )}
                 </select>
+                <input
+                    type="button"
+                    value="X"
+                    onClick={
+                        () => this.props.app.removeTuning(true_index)
+                    }
+                />
             </form>
         );
     }
 
     render() {
         let strings = this.props.app.state.tuning.slice().reverse();
+        console.log(strings);
+
         return(
             <section id="fretboard">
                 <h2>
@@ -112,8 +123,8 @@ class KeyModeSettings extends React.Component {
             <section id="key-settings">
                 <h2>Key/Mode Settings</h2>
                 <form action="." method="get">
-                    <div class="form-group">
-                        <label for="choose-Key">Key</label>
+                    <div className="form-group">
+                        <label htmlFor="choose-Key">Key</label>
                         <br />
                         <select id="choose-key" name="choose-key">
                         {PITCH_NAMES.map((name, index) =>
@@ -127,8 +138,8 @@ class KeyModeSettings extends React.Component {
                         )}
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="choose-mode">Mode</label>
+                    <div className="form-group">
+                        <label htmlFor="choose-mode">Mode</label>
                         <br />
                         <select id="choose-mode" name="choose-mode">
                         {FORMULAE.map((item, index) => 
@@ -214,6 +225,12 @@ class FretScaleApp extends React.Component {
             pitches.push(PITCH_NAMES[num]);
         }
         return pitches;
+    }
+
+    removeTuning(index) {
+        let tuning = this.state.tuning.slice();
+        tuning.splice(index, 1);
+        this.setState({tuning: tuning});
     }
 
     render() {
