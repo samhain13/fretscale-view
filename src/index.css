@@ -30,8 +30,6 @@ body {
     height: 3em;
     width: 3em;
 }
-#fretboard td:first-child,
-#fretboard td:nth-of-type(2),
 #fretboard td:last-child {
     width: 1em;
 }

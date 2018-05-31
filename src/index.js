@@ -18,9 +18,9 @@ class Fretboard extends React.Component {
     }
     
     getMarkerValue(fret_number) {
-        if ([4, 6, 8, 10].indexOf(fret_number) >= 0) {
+        if ([3, 5, 7, 9].indexOf(fret_number) >= 0) {
             return '•';
-        } else if (fret_number === Number(this.props.app.props.show_frets)) {
+        } else if (fret_number === 12) {
             return '••';
         } else {
             return '';
@@ -28,7 +28,7 @@ class Fretboard extends React.Component {
     }
 
     renderMarkers() {
-        let frets = Array(Number(this.props.app.props.show_frets) + 1).fill(null);
+        let frets = Array(Number(this.props.app.props.show_frets)).fill(null);
         return(
             <tr>
             {frets.map((value, index) =>
@@ -44,7 +44,6 @@ class Fretboard extends React.Component {
         let frets = this.props.app.getPitchArray(pitch);
         return(
             <tr key={index}>
-                <td>Tune</td>
             {frets.map((pitch_name, fret_index) =>
                 <td
                     key={fret_index}
