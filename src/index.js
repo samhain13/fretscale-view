@@ -5,7 +5,7 @@ import {FORMULAE} from './fretscale-constants.js';
 import './index.css';
 
 
-class Fretboard extends React.Component {
+class InstrumentString extends React.Component {
     getFretClassName(pitch_name) {
         let index = this.props.app.state.active_pitches.indexOf(pitch_name);
         if (index === 0) {
@@ -16,58 +16,17 @@ class Fretboard extends React.Component {
             return 'inactive-pitch';
         }
     }
-    
-    getMarkerValue(fret_number) {
-        if ([3, 5, 7, 9].indexOf(fret_number) >= 0) {
-            return '•';
-        } else if (fret_number === 12) {
-            return '••';
-        } else {
-            return '';
-        }
-    }
-
-    renderMarkers() {
-        let frets = Array(Number(this.props.app.props.show_frets)).fill(null);
-        return(
-            <tr>
-            {frets.map((value, index) =>
-                <td key={index} className='fret-marker'>
-                    {this.getMarkerValue(index)}
-                </td>
-            )}
-            </tr>
-        );
-    }
-
-    renderString(pitch, index) {
-        let frets = this.props.app.getPitchArray(pitch);
-        return(
-            <tr key={index}>
-            {frets.map((pitch_name, fret_index) =>
-                <td
-                    key={fret_index}
-                    className={this.getFretClassName(pitch_name)}
-                >
-                    {
-                        (fret_index === 0) ?
-                        this.renderTuner(pitch_name, fret_index, index) :
-                        pitch_name
-                    }
-                </td>
-            )}
-            </tr>
-        );
-    }
 
     renderTuner(pitch_name, fret_index, index) {
         let true_index = this.props.app.state.tuning.length - index - 1;
+
         return(
             <form action="." method="get" className="tuner-form">
                 <select
-                    id={'tuner' + true_index}
+                    id={'tuner-' + true_index}
                     name="tuner"
-                    defaultValue={pitch_name}
+                    value={pitch_name}
+                    onChange={() => {}}  // Just to get rid of the warning.
                 >
                 {PITCH_NAMES.map((name, pitch_index) =>
                     <option
@@ -92,8 +51,66 @@ class Fretboard extends React.Component {
     }
 
     render() {
+        let frets = this.props.app.getPitchArray(this.props.pitch);
+
+        return(
+            <tr key={'string-' + this.props.index}>
+            {frets.map((pitch_name, fret_index) =>
+                <td
+                    key={'fret-' + this.props.index + '-' + fret_index}
+                    className={this.getFretClassName(pitch_name)}
+                >
+                    {
+                        (fret_index === 0) ?
+                        this.renderTuner(pitch_name, fret_index, this.props.index) :
+                        pitch_name
+                    }
+                </td>
+            )}
+            </tr>
+        );
+    }
+}
+
+
+class Fretboard extends React.Component {
+    getMarkerValue(fret_number) {
+        if ([3, 5, 7, 9].indexOf(fret_number) >= 0) {
+            return '•';
+        } else if (fret_number === 12) {
+            return '••';
+        } else {
+            return '';
+        }
+    }
+
+    renderMarkers() {
+        let frets = Array(Number(this.props.app.props.show_frets)).fill(null);
+
+        return(
+            <tr>
+            {frets.map((value, index) =>
+                <td key={index} className='fret-marker'>
+                    {this.getMarkerValue(index)}
+                </td>
+            )}
+            </tr>
+        );
+    }
+
+    render() {
         let strings = this.props.app.state.tuning.slice().reverse();
-        console.log(strings);
+        let string_components = [];
+        for (let i=0; i<strings.length; i++) {
+            string_components.push(
+                <InstrumentString
+                    key={'string-' + i}
+                    app={this.props.app}
+                    pitch={strings[i]}
+                    index={i}
+                />
+            );
+        }
 
         return(
             <section id="fretboard">
@@ -105,9 +122,7 @@ class Fretboard extends React.Component {
                 <table>
                     <tbody>
                     {this.renderMarkers()}
-                    {strings.map((pitch, index) =>
-                        this.renderString(pitch, index)
-                    )}
+                    {string_components}
                     {this.renderMarkers()}
                     </tbody>
                 </table>
