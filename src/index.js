@@ -85,23 +85,23 @@ class Fretboard extends React.Component {
 
   renderMarkerForm (isInsert) {
     return (
-        <form action='.' method='get' className='tuner-form'>
-          <select
-            id={'tuner-' + (isInsert) ? 'insert' : 'append'}
-            name='tuner'
-          >
-            {PITCH_NAMES.map((name, pitchIndex) =>
-              <option
-                key={pitchIndex}
-                onClick={
-                  () => this.props.app.addTuning(name, isInsert)
-                }
-              >
-                {'Add string: ' + name}
-              </option>
-            )}
-          </select>
-        </form>
+      <form action='.' method='get' className='tuner-form'>
+        <select
+          id={'tuner-' + (isInsert) ? 'insert' : 'append'}
+          name='tuner'
+        >
+          {PITCH_NAMES.map((name, pitchIndex) =>
+            <option
+              key={pitchIndex}
+              onClick={
+                () => this.props.app.addTuning(name, isInsert)
+              }
+            >
+              {'Add string: ' + name}
+            </option>
+          )}
+        </select>
+      </form>
     )
   }
 
