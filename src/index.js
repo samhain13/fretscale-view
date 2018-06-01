@@ -71,24 +71,48 @@ class InstrumentString extends React.Component {
 }
 
 class Fretboard extends React.Component {
-  getMarkerValue (fretNumber) {
+  getMarkerValue (fretNumber, isInsert) {
     if ([3, 5, 7, 9].indexOf(fretNumber) >= 0) {
       return '•'
     } else if (fretNumber === 12) {
       return '••'
+    } else if (fretNumber === 0) {
+      return this.renderMarkerForm(isInsert)
     } else {
       return ''
     }
   }
 
-  renderMarkers () {
+  renderMarkerForm (isInsert) {
+    return (
+        <form action='.' method='get' className='tuner-form'>
+          <select
+            id={'tuner-' + (isInsert) ? 'insert' : 'append'}
+            name='tuner'
+          >
+            {PITCH_NAMES.map((name, pitchIndex) =>
+              <option
+                key={pitchIndex}
+                onClick={
+                  () => this.props.app.addTuning(name, isInsert)
+                }
+              >
+                {'Add string: ' + name}
+              </option>
+            )}
+          </select>
+        </form>
+    )
+  }
+
+  renderMarkers (isInsert) {
     let frets = Array(Number(this.props.app.props.show_frets)).fill(null)
 
     return (
       <tr>
         {frets.map((value, index) =>
           <td key={index} className='fret-marker'>
-            {this.getMarkerValue(index)}
+            {this.getMarkerValue(index, isInsert)}
           </td>
         )}
       </tr>
@@ -118,9 +142,9 @@ class Fretboard extends React.Component {
         </h2>
         <table>
           <tbody>
-            {this.renderMarkers()}
+            {this.renderMarkers(false)}
             {stringComponents}
-            {this.renderMarkers()}
+            {this.renderMarkers(true)}
           </tbody>
         </table>
       </section>
@@ -181,6 +205,16 @@ class FretScaleApp extends React.Component {
       pitch_name: PITCH_NAMES[0],
       tuning: ['E', 'A', 'D', 'G', 'B', 'E']
     }
+  }
+
+  addTuning (pitchName, isInsert) {
+    let tuning = this.state.tuning.slice()
+    if (isInsert) {
+      tuning.unshift(pitchName)
+    } else {
+      tuning.push(pitchName)
+    }
+    this.setState({tuning: tuning})
   }
 
   applyKeyModeSettings (formula) {
