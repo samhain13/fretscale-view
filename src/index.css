@@ -56,10 +56,17 @@ a:focus, a:hover {
 
 .active-pitch {
     background: rgb(200,200,200);
+    border: 1px rgb(150,150,150) solid;
+}
+
+.inactive-pitch {
+    background: rgb(255,255,255);
+    border: 1px rgb(200,200,200) solid;
 }
 
 .root-pitch {
     background: rgb(100,200,100);
+    border: 1px rgb(50,50,50) solid;
 }
 
 .form-group {
@@ -74,7 +81,6 @@ a:focus, a:hover {
     padding: 0px;
 }
     .instrument-string li {
-        border: 1px rgb(200,200,200) solid;
         flex-basis: 100px;
         margin: 1px;
         padding: 5px;

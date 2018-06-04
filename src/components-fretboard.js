@@ -16,7 +16,7 @@ class InstrumentString extends Component {
   renderFrets () {
     let start_index = PITCH_NAMES.indexOf(this.props.root)
     let frets = []
-    for (let i = 1; i < this.props.frets + 1; i++) {
+    for (let i = 0; i < this.props.frets + 1; i++) {
       let pitchIndex = i + start_index
       if (pitchIndex >= PITCH_NAMES.length) {
         pitchIndex -= PITCH_NAMES.length
@@ -27,7 +27,7 @@ class InstrumentString extends Component {
           key={this.props.key_string + '-' + i}
           className={this.getFretClass(pitchName)}
         >
-          {pitchName}
+          {(i > 0) ? pitchName : 'working on it...'}
         </li>
       )
     }
@@ -37,7 +37,6 @@ class InstrumentString extends Component {
   render () {
     return (
       <ol className='instrument-string'>
-        <li className='tuner'>{this.props.root}</li>
         {this.renderFrets()}
       </ol>
     )
@@ -47,13 +46,14 @@ class InstrumentString extends Component {
 class Fretboard extends Component {
   renderStrings () {
     let renderedStrings = []
-    for (let i = 0; i < this.props.tuning.length; i++) {
+    let strings = this.props.tuning.reverse()
+    for (let i = 0; i < strings.length; i++) {
       renderedStrings.push(
         <InstrumentString
           frets={this.props.frets}
           key={'fret-string-' + i}
           key_string={'fret-string-' + i}
-          root={this.props.tuning[i]}
+          root={strings[i]}
           valid_notes={this.props.valid_notes}
         />
       )

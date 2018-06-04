@@ -24,7 +24,7 @@ class App extends Component {
       return <Fretboard
         frets={this.state.fretboard_frets}
         title={this.getViewModeTitle()}
-        tuning={this.state.fretboard_tuning.slice().reverse()}
+        tuning={this.state.fretboard_tuning.slice()}
         valid_notes={this.getValidNotes()}
       />
     } else if (this.state.app_mode === 'keyboard') {
@@ -41,7 +41,6 @@ class App extends Component {
     let items = FORMULAE[this.state.current_formula].items
     let transposed = []
     let valid_notes = []
-    console.log(this.state.current_pitch, PITCH_NAMES[this.state.current_pitch])
     for (let i = 0; i < PITCH_NAMES.length; i++) {
       let pitchIndex = i + this.state.current_pitch
       if (pitchIndex >= PITCH_NAMES.length) {
@@ -52,7 +51,6 @@ class App extends Component {
     for (let i = 0; i < items.length; i++) {
       valid_notes.push(transposed[items[i]])
     }
-    console.log(valid_notes)
     return valid_notes
   }
 
