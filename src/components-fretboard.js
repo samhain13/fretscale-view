@@ -13,7 +13,7 @@ class InstrumentString extends Component {
     }
   }
 
-  getTunerForm (current_pitch_index) {
+  getTunerForm (currentPitchIndex) {
     return (
       <form className='tuner-form'>
         <input
@@ -22,7 +22,7 @@ class InstrumentString extends Component {
           value='X'
         />
         <select
-          value={current_pitch_index}
+          value={currentPitchIndex}
           onChange={this.handleTuningChange.bind(this)}
         >
           {PITCH_NAMES.map((pitchName, index) => {
@@ -45,10 +45,10 @@ class InstrumentString extends Component {
   }
 
   renderFrets () {
-    let start_index = PITCH_NAMES.indexOf(this.props.root)
+    let startIndex = PITCH_NAMES.indexOf(this.props.root)
     let frets = []
     for (let i = 0; i < this.props.frets + 1; i++) {
-      let pitchIndex = i + start_index
+      let pitchIndex = i + startIndex
       if (pitchIndex >= PITCH_NAMES.length) {
         pitchIndex -= PITCH_NAMES.length
       }
@@ -58,7 +58,7 @@ class InstrumentString extends Component {
           key={this.props.key_string + '-' + i}
           className={this.getFretClass(pitchName)}
         >
-          {(i > 0) ? pitchName : this.getTunerForm(start_index)}
+          {(i > 0) ? pitchName : this.getTunerForm(startIndex)}
         </li>
       )
     }

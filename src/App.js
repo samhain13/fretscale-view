@@ -26,7 +26,7 @@ class App extends Component {
         remove_string={(stringIndex) => this.removeString(stringIndex)}
         set_tuning={
           (pitchIndex, stringIndex) =>
-          this.setStringTuning(pitchIndex, stringIndex)
+            this.setStringTuning(pitchIndex, stringIndex)
         }
         title={this.getViewModeTitle()}
         tuning={this.state.fretboard_tuning.slice()}
@@ -45,7 +45,7 @@ class App extends Component {
   getValidNotes () {
     let items = FORMULAE[this.state.current_formula].items
     let transposed = []
-    let valid_notes = []
+    let validNotes = []
     for (let i = 0; i < PITCH_NAMES.length; i++) {
       let pitchIndex = i + this.state.current_pitch
       if (pitchIndex >= PITCH_NAMES.length) {
@@ -54,9 +54,9 @@ class App extends Component {
       transposed.push(PITCH_NAMES[pitchIndex])
     }
     for (let i = 0; i < items.length; i++) {
-      valid_notes.push(transposed[items[i]])
+      validNotes.push(transposed[items[i]])
     }
-    return valid_notes
+    return validNotes
   }
 
   getViewModeTitle () {
