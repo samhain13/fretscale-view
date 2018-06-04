@@ -13,6 +13,37 @@ class InstrumentString extends Component {
     }
   }
 
+  getTunerForm (current_pitch_index) {
+    return (
+      <form className='tuner-form'>
+        <input
+          onClick={() => this.props.remove_string(this.props.string_index)}
+          type='button'
+          value='X'
+        />
+        <select
+          value={current_pitch_index}
+          onChange={this.handleTuningChange.bind(this)}
+        >
+          {PITCH_NAMES.map((pitchName, index) => {
+            return (
+              <option
+                key={'tune-' + this.props.string_index + '-' + index}
+                value={index}
+              >
+                {pitchName}
+              </option>
+            )
+          })}
+        </select>
+      </form>
+    )
+  }
+
+  handleTuningChange (event) {
+    this.props.set_tuning(Number(event.target.value), this.props.string_index)
+  }
+
   renderFrets () {
     let start_index = PITCH_NAMES.indexOf(this.props.root)
     let frets = []
@@ -27,7 +58,7 @@ class InstrumentString extends Component {
           key={this.props.key_string + '-' + i}
           className={this.getFretClass(pitchName)}
         >
-          {(i > 0) ? pitchName : 'working on it...'}
+          {(i > 0) ? pitchName : this.getTunerForm(start_index)}
         </li>
       )
     }
@@ -54,6 +85,9 @@ class Fretboard extends Component {
           key={'fret-string-' + i}
           key_string={'fret-string-' + i}
           root={strings[i]}
+          remove_string={this.props.remove_string}
+          set_tuning={this.props.set_tuning}
+          string_index={strings.length - i - 1}
           valid_notes={this.props.valid_notes}
         />
       )

@@ -23,6 +23,11 @@ class App extends Component {
     if (this.state.app_mode === 'fretboard') {
       return <Fretboard
         frets={this.state.fretboard_frets}
+        remove_string={(stringIndex) => this.removeString(stringIndex)}
+        set_tuning={
+          (pitchIndex, stringIndex) =>
+          this.setStringTuning(pitchIndex, stringIndex)
+        }
         title={this.getViewModeTitle()}
         tuning={this.state.fretboard_tuning.slice()}
         valid_notes={this.getValidNotes()}
@@ -61,12 +66,24 @@ class App extends Component {
     )
   }
 
+  removeString (stringIndex) {
+    let tuning = this.state.fretboard_tuning.slice()
+    tuning.splice(stringIndex, 1)
+    this.setState({fretboard_tuning: tuning})
+  }
+
   setAppMode (appMode) {
     this.setState({app_mode: appMode})
   }
 
   setFormula (formulaIndex) {
     this.setState({current_formula: formulaIndex})
+  }
+
+  setStringTuning (pitchIndex, stringIndex) {
+    let tuning = this.state.fretboard_tuning.slice()
+    tuning[stringIndex] = PITCH_NAMES[pitchIndex]
+    this.setState({fretboard_tuning: tuning})
   }
 
   setPitch (pitchIndex) {
