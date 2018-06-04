@@ -38,5 +38,4 @@ const FORMULAE = [
   }
 ]
 
-export {PITCH_NAMES}
-export {FORMULAE}
+export {PITCH_NAMES, FORMULAE}
