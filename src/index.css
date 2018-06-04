@@ -26,6 +26,8 @@ h1 {
     font-size: 2.2em;
     font-weight: normal;
     letter-spacing: 0.1em;
+    margin: 0px;
+    padding-top: 20px;
 }
 
 h2 {
@@ -65,6 +67,24 @@ a:focus, a:hover {
     padding: 0px 5px;
 }
 
+.instrument-string {
+    display: flex;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+    .instrument-string li {
+        border: 1px rgb(200,200,200) solid;
+        flex-basis: 100px;
+        margin: 1px;
+        padding: 5px;
+        text-align: center;
+    }
+    .instrument-string li:first-child {
+        flex-basis: 150px;
+        text-align: left;
+    }
+
 .tuner-form {
     display: flex;
     width: 100%;
@@ -87,25 +107,3 @@ a:focus, a:hover {
         margin: 5px;
     }
 
-#fretboard {
-    min-width: 420px;
-}
-    #fretboard table {
-        font-size: 0.9em;
-        overflow: auto;
-        text-align: center;
-        vertical-align: middle;
-        width: 100%;
-    }
-    #fretboard td {
-        border: 1px rgb(200,200,200) solid;
-        height: 3em;
-        width: 3em;
-    }
-    #fretboard td:last-child {
-        width: 1em;
-    }
-    #fretboard td.fret-marker {
-        font-size: 2em;
-        height: 1em;
-    }

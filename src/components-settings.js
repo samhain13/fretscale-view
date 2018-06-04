@@ -21,11 +21,11 @@ class ViewModeSettings extends Component {
 
 class KeyModeSettings extends Component {
   handleFormulaChange (event) {
-    this.props.setFormula(event.target.value)
+    this.props.setFormula(Number(event.target.value))
   }
 
   handlePitchChange (event) {
-    this.props.setPitch(event.target.value)
+    this.props.setPitch(Number(event.target.value))
   }
 
   render () {

@@ -13,6 +13,8 @@ class App extends Component {
       app_mode_choices: ['Fretboard', 'Keyboard'],
       current_pitch: 0,
       current_formula: 0,
+      fretboard_frets: 12,
+      fretboard_tuning: ['E', 'A', 'D', 'G', 'B', 'E'],
       view_title: 'No Key/Mode Selected'
     }
   }
@@ -20,15 +22,38 @@ class App extends Component {
   getAppModeComponent (appMode) {
     if (this.state.app_mode === 'fretboard') {
       return <Fretboard
+        frets={this.state.fretboard_frets}
         title={this.getViewModeTitle()}
+        tuning={this.state.fretboard_tuning.slice().reverse()}
+        valid_notes={this.getValidNotes()}
       />
     } else if (this.state.app_mode === 'keyboard') {
       return <Keyboard
         title={this.getViewModeTitle()}
+        valid_notes={this.getValidNotes()}
       />
     } else {
       return ''
     }
+  }
+
+  getValidNotes () {
+    let items = FORMULAE[this.state.current_formula].items
+    let transposed = []
+    let valid_notes = []
+    console.log(this.state.current_pitch, PITCH_NAMES[this.state.current_pitch])
+    for (let i = 0; i < PITCH_NAMES.length; i++) {
+      let pitchIndex = i + this.state.current_pitch
+      if (pitchIndex >= PITCH_NAMES.length) {
+        pitchIndex -= PITCH_NAMES.length
+      }
+      transposed.push(PITCH_NAMES[pitchIndex])
+    }
+    for (let i = 0; i < items.length; i++) {
+      valid_notes.push(transposed[items[i]])
+    }
+    console.log(valid_notes)
+    return valid_notes
   }
 
   getViewModeTitle () {
