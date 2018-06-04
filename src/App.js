@@ -1,68 +1,9 @@
 import React, {Component} from 'react'
 import {PITCH_NAMES, FORMULAE} from './fretscale-constants'
+import {ViewModeSettings, KeyModeSettings} from './components-settings'
 import {Fretboard} from './components-fretboard'
 import {Keyboard} from './components-keyboard'
 import './index.css'
-
-class ViewModeSettings extends Component {
-  render () {
-    return (
-      <nav id='mode-picker'>
-        <h3>Select View Mode</h3>
-        {this.props.modes.map((modeName, index) =>
-          <button
-            key={'app-mode-' + index}
-            onClick={() => this.props.onClick(modeName.toLowerCase())}
-          >
-            {modeName} Mode
-          </button>
-        )}
-      </nav>
-    )
-  }
-}
-
-class KeyModeSettings extends Component {
-  render () {
-    return (
-      <form>
-        <h3>Select Key/Mode</h3>
-        <div className='form-group'>
-          <label htmlFor='pick-pitch'>
-            Root/Key
-          </label>
-          <select
-            id='pick-pitch'
-          >
-            {PITCH_NAMES.map((pitchName, index) =>
-              <option
-                key={'pitch-names-' + index}
-              >
-                {pitchName}
-              </option>
-            )}
-          </select>
-        </div>
-        <div className='form-group'>
-          <label htmlFor='pick-mode'>
-            Mode
-          </label>
-          <select
-            id='pick-mode'
-          >
-            {FORMULAE.map((formula, index) =>
-              <option
-                key={'mode-forumla-' + index}
-              >
-                {formula.name}
-              </option>
-            )}
-          </select>
-        </div>
-      </form>
-    )
-  }
-}
 
 class App extends Component {
   constructor (props) {
@@ -70,26 +11,43 @@ class App extends Component {
     this.state = {
       app_mode: 'fretboard',
       app_mode_choices: ['Fretboard', 'Keyboard'],
+      current_pitch: 0,
+      current_formula: 0,
       view_title: 'No Key/Mode Selected'
     }
   }
 
-  getAppModeComponent(appMode) {
+  getAppModeComponent (appMode) {
     if (this.state.app_mode === 'fretboard') {
       return <Fretboard
-        title={this.state.view_title}
+        title={this.getViewModeTitle()}
       />
     } else if (this.state.app_mode === 'keyboard') {
       return <Keyboard
-        title={this.state.view_title}
+        title={this.getViewModeTitle()}
       />
     } else {
       return ''
     }
   }
 
+  getViewModeTitle () {
+    return (
+      PITCH_NAMES[this.state.current_pitch] + ' ' +
+      FORMULAE[this.state.current_formula].name
+    )
+  }
+
   setAppMode (appMode) {
     this.setState({app_mode: appMode})
+  }
+
+  setFormula (formulaIndex) {
+    this.setState({current_formula: formulaIndex})
+  }
+
+  setPitch (pitchIndex) {
+    this.setState({current_pitch: pitchIndex})
   }
 
   render () {
@@ -102,7 +60,12 @@ class App extends Component {
             modes={this.state.app_mode_choices}
             onClick={(appMode) => this.setAppMode(appMode)}
           />
-          <KeyModeSettings />
+          <KeyModeSettings
+            current_formula={this.state.current_forumla}
+            current_pitch={this.state.current_pitch}
+            setFormula={(formulaIndex) => this.setFormula(formulaIndex)}
+            setPitch={(pitchIndex) => this.setPitch(pitchIndex)}
+          />
         </section>
       </div>
     )
