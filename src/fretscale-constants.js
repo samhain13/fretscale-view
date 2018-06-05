@@ -4,31 +4,31 @@ const PITCH_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#',
 
 const FORMULAE = [
   {
-    'name': 'Ionian Mode / Major',
+    'name': 'Ionian Mode / Major (I)',
     'items': [0, 2, 4, 5, 7, 9, 11]
   },
   {
-    'name': 'Dorian Mode',
+    'name': 'Dorian Mode (II)',
     'items': [0, 2, 3, 5, 7, 9, 10]
   },
   {
-    'name': 'Phrygian Mode',
+    'name': 'Phrygian Mode (III)',
     'items': [0, 1, 3, 5, 7, 8, 10]
   },
   {
-    'name': 'Lydian Mode',
+    'name': 'Lydian Mode (IV)',
     'items': [0, 2, 4, 6, 7, 9, 11]
   },
   {
-    'name': 'Mixolydian Mode',
+    'name': 'Mixolydian Mode (V)',
     'items': [0, 2, 4, 5, 7, 9, 10]
   },
   {
-    'name': 'Aeolian / Natural Minor',
+    'name': 'Aeolian / Natural Minor (VI)',
     'items': [0, 2, 3, 5, 7, 8, 10]
   },
   {
-    'name': 'Locrian Mode',
+    'name': 'Locrian Mode (VII)',
     'items': [0, 1, 3, 5, 6, 8, 10]
   },
   {

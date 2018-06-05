@@ -15,6 +15,7 @@ class App extends Component {
       current_formula: 0,
       fretboard_frets: 12,
       fretboard_tuning: ['E', 'A', 'D', 'G', 'B', 'E'],
+      keyboard_keys: 36,
       view_title: 'No Key/Mode Selected'
     }
   }
@@ -38,6 +39,7 @@ class App extends Component {
       />
     } else if (this.state.app_mode === 'keyboard') {
       return <Keyboard
+        keys={this.state.keyboard_keys}
         title={this.getViewModeTitle()}
         valid_notes={this.getValidNotes()}
       />
