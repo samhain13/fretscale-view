@@ -1,6 +1,77 @@
 import React, {Component} from 'react'
 import {PITCH_NAMES, getPitchOptions} from './fretscale-constants'
 
+class InstrumentMarkers extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      current_pitch: PITCH_NAMES[0]
+    }
+  }
+
+  getFretValue (index) {
+    if (index === 0) {
+      return this.getTunerForm()
+    } else if (index === 12) {
+      return <strong>••</strong>
+    } else if ([3, 5, 7, 9].indexOf(index) >= 0) {
+      return <strong>•</strong>
+    } else {
+      return ' '
+    }
+  }
+
+  getTunerForm () {
+    return (
+      <form className='tuner-form'>
+        <select
+          defaultValue='0'
+          onChange={this.handleAddString.bind(this)}
+        >
+          {getPitchOptions('tune-' + this.props.string_index + '-')}
+        </select>
+        <input
+          type='button'
+          value={(this.props.is_insert) ? '▲' : '▼'}
+          onClick={() => this.insertString()}
+        />
+      </form>
+    )
+  }
+
+  handleAddString (event) {
+    let pitchName = PITCH_NAMES[Number(event.target.value)]
+    this.setState({current_pitch: pitchName})
+  }
+
+  insertString () {
+    this.props.insert_string(this.props.is_insert, this.state.current_pitch)
+  }
+
+  renderFrets () {
+    let frets = []
+    for (let i = 0; i < this.props.frets + 1; i++) {
+      frets.push(
+        <li
+          key={((this.props.is_insert) ? 'top-marker-' : 'bottom-marker-') + i}
+          className='inactive-pitch'
+        >
+          {this.getFretValue(i)}
+        </li>
+      )
+    }
+    return frets
+  }
+
+  render () {
+    return (
+      <ol className='instrument-markers'>
+        {this.renderFrets()}
+      </ol>
+    )
+  }
+}
+
 class InstrumentString extends Component {
   getFretClass (pitchName) {
     let index = this.props.valid_notes.indexOf(pitchName)
@@ -19,7 +90,7 @@ class InstrumentString extends Component {
         <input
           onClick={() => this.props.remove_string(this.props.string_index)}
           type='button'
-          value='X'
+          value='◀'
         />
         <select
           value={currentPitchIndex}
@@ -66,6 +137,16 @@ class InstrumentString extends Component {
 }
 
 class Fretboard extends Component {
+  renderMarkers (isInsert) {
+    return (
+      <InstrumentMarkers
+        frets={this.props.frets}
+        insert_string={this.props.insert_string}
+        is_insert={isInsert}
+      />
+    )
+  }
+
   renderStrings () {
     let renderedStrings = []
     let strings = this.props.tuning.reverse()
@@ -95,7 +176,9 @@ class Fretboard extends Component {
           {this.props.title}
         </h2>
         <div id='fretboard'>
+          {this.renderMarkers(false)}
           {this.renderStrings()}
+          {this.renderMarkers(true)}
         </div>
       </section>
     )

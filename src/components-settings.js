@@ -11,7 +11,7 @@ class ViewModeSettings extends Component {
             key={'app-mode-' + index}
             onClick={() => this.props.onClick(modeName.toLowerCase())}
           >
-            {modeName} Mode
+            {modeName} View
           </button>
         )}
       </nav>
@@ -34,7 +34,7 @@ class KeyModeSettings extends Component {
         <h3>Select Key/Mode</h3>
         <div className='form-group'>
           <label htmlFor='pick-pitch'>
-            Root/Key
+            Root
           </label>
           <select
             id='pick-pitch'

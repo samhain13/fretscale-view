@@ -23,6 +23,10 @@ class App extends Component {
     if (this.state.app_mode === 'fretboard') {
       return <Fretboard
         frets={this.state.fretboard_frets}
+        insert_string={
+          (isInsert, pitchName) =>
+            this.insertString(isInsert, pitchName)
+        }
         remove_string={(stringIndex) => this.removeString(stringIndex)}
         set_tuning={
           (pitchIndex, stringIndex) =>
@@ -64,6 +68,17 @@ class App extends Component {
       PITCH_NAMES[this.state.current_pitch] + ' ' +
       FORMULAE[this.state.current_formula].name
     )
+  }
+
+  insertString (isInsert, pitchName) {
+    console.log(pitchName)
+    let tuning = this.state.fretboard_tuning.slice()
+    if (isInsert) {
+      tuning.splice(0, 0, pitchName)
+    } else {
+      tuning.push(pitchName)
+    }
+    this.setState({fretboard_tuning: tuning})
   }
 
   removeString (stringIndex) {
