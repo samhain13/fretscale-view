@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {PITCH_NAMES} from './fretscale-constants'
+import {PITCH_NAMES, getPitchOptions} from './fretscale-constants'
 
 class InstrumentString extends Component {
   getFretClass (pitchName) {
@@ -25,16 +25,7 @@ class InstrumentString extends Component {
           value={currentPitchIndex}
           onChange={this.handleTuningChange.bind(this)}
         >
-          {PITCH_NAMES.map((pitchName, index) => {
-            return (
-              <option
-                key={'tune-' + this.props.string_index + '-' + index}
-                value={index}
-              >
-                {pitchName}
-              </option>
-            )
-          })}
+          {getPitchOptions('tune-' + this.props.string_index + '-')}
         </select>
       </form>
     )

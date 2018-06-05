@@ -1,4 +1,7 @@
+import React from 'react'
+
 const PITCH_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+
 const FORMULAE = [
   {
     'name': 'Major / Ionian',
@@ -38,4 +41,32 @@ const FORMULAE = [
   }
 ]
 
-export {PITCH_NAMES, FORMULAE}
+function getFormulaOptions (keyPrefix) {
+  let options = FORMULAE.map((formula, index) => {
+    return (
+      <option
+        key={keyPrefix + index}
+        value={index}
+      >
+        {formula.name}
+      </option>
+    )
+  })
+  return options
+}
+
+function getPitchOptions (keyPrefix) {
+  let options = PITCH_NAMES.map((pitchName, index) => {
+    return (
+      <option
+        key={keyPrefix + '-' + index}
+        value={index}
+      >
+        {pitchName}
+      </option>
+    )
+  })
+  return options
+}
+
+export {PITCH_NAMES, FORMULAE, getFormulaOptions, getPitchOptions}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {PITCH_NAMES, FORMULAE} from './fretscale-constants'
+import {getFormulaOptions, getPitchOptions} from './fretscale-constants'
 
 class ViewModeSettings extends Component {
   render () {
@@ -41,14 +41,7 @@ class KeyModeSettings extends Component {
             value={this.props.current_pitch}
             onChange={this.handlePitchChange.bind(this)}
           >
-            {PITCH_NAMES.map((pitchName, index) =>
-              <option
-                key={'pitch-names-' + index}
-                value={index}
-              >
-                {pitchName}
-              </option>
-            )}
+            {getPitchOptions('pitch-names-')}
           </select>
         </div>
         <div className='form-group'>
@@ -60,14 +53,7 @@ class KeyModeSettings extends Component {
             value={this.props.current_formula}
             onChange={this.handleFormulaChange.bind(this)}
           >
-            {FORMULAE.map((formula, index) =>
-              <option
-                key={'mode-forumla-' + index}
-                value={index}
-              >
-                {formula.name}
-              </option>
-            )}
+            {getFormulaOptions('mode-formula-')}
           </select>
         </div>
       </form>
