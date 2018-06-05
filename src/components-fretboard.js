@@ -171,7 +171,7 @@ class Fretboard extends Component {
     return (
       <section>
         <h2>
-          <small>Keyboard</small>
+          <small>Fretboard</small>
           <br />
           {this.props.title}
         </h2>

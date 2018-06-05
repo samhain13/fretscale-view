@@ -5,7 +5,7 @@ class Keyboard extends Component {
     return (
       <section>
         <h2>
-          <small>Fretboard</small>
+          <small>Keyboard</small>
           <br />
           {this.props.title}
         </h2>
