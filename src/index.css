@@ -26,6 +26,8 @@ h1 {
     font-size: 2.2em;
     font-weight: normal;
     letter-spacing: 0.1em;
+    margin: 0px;
+    padding-top: 20px;
 }
 
 h2 {
@@ -33,7 +35,16 @@ h2 {
     font-weight: normal;
     margin: 0px;
     padding: 10px 0px;
+    text-align: center;
 }
+
+h3 {
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 0px;
+    padding: 10px 0px;
+}
+
 
 a:link, a:visited {
     color: rgb(0,0,0);
@@ -45,58 +56,120 @@ a:focus, a:hover {
 
 
 .active-pitch {
-    background: rgb(200,200,200);
+    background: linear-gradient(
+        to bottom,
+        rgb(200,200,180) 0%,
+        rgb(240,240,150) 100%
+    );
+    border: 1px rgb(100,100,100) solid;
+}
+
+.inactive-pitch {
+    background: rgb(255,255,255);
+    border: 1px rgb(200,200,200) solid;
+    color: rgb(170,170,170);
 }
 
 .root-pitch {
-    background: rgb(100,200,100);
+    background: linear-gradient(
+        to bottom,
+        rgb(130,180,130) 0%,
+        rgb(180,240,180) 100%
+    );
+    border: 1px rgb(100,100,100) solid;
 }
 
 .form-group {
     display: inline-block;
+    margin-bottom: 10px;
     padding: 0px 5px;
 }
+
+.instrument-markers,
+.instrument-string {
+    margin: 2px 0px;
+    padding: 0px;
+    text-align: center;
+    white-space: nowrap;
+}
+    .instrument-markers li {
+        display: inline-block;
+        margin: 0px 1px;
+        width: 60px;
+    }
+    .instrument-string li {
+        display: inline-block;
+        margin: 0px 1px;
+        padding: 5px 0px;
+        width: 60px;
+    }
+    .instrument-string li:first-child {
+        padding: 2px;
+        width: 100px;
+    }
+    .instrument-markers li:first-child {
+        border: 0px;
+        padding: 2px;
+        width: 100px;
+    }
+    .instrument-markers strong {
+        color: rgb(50,50,50);
+        font-size: 1.4em;
+    }
 
 .tuner-form {
     display: flex;
     width: 100%;
 }
-
-.tuner-form > select {
-    flex-grow: 2;
-}
-
-.tuner-form > input {
-    flex-grow: 1;
-}
-
-#fretboard {
-    min-width: 420px;
-}
-    #fretboard table {
-        font-size: 0.9em;
-        overflow: auto;
-        text-align: center;
-        vertical-align: middle;
-        width: 100%;
+    .tuner-form > select {
+        flex-grow: 2;
     }
-    #fretboard td {
-        border: 1px rgb(200,200,200) solid;
-        height: 3em;
-        width: 3em;
-    }
-    #fretboard td:last-child {
-        width: 1em;
-    }
-    #fretboard td.fret-marker {
-        font-size: 2em;
-        height: 1em;
+    .tuner-form > input {
+        flex-grow: 1;
     }
 
-#key-settings {
+#app-settings {
     text-align: center;
 }
-    #key-settings form {
+    #app-settings > form, #app-settings > nav {
         display: inline-block;
-        text-align: left;
+        padding: 0px 10px 10px 10px;
     }
+    #app-settings button, #app-settings label {
+        margin: 5px;
+    }
+
+#fretboard {
+    overflow: auto;
+    padding: 0px 0px 10px 0px;
+    width: 100%;
+}
+
+#keyboard {
+    list-style-type: none;
+    margin: 0px;
+    overflow: auto;
+    padding: 0px 0px 10px 0px;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+}
+    #keyboard li {
+        border: 1px rgb(100,100,100) solid;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        display: inline-block;
+        margin: 0px 1px;
+        padding: 150px 5px 10px 5px;
+        position: relative;
+        vertical-align: top;
+        width: 30px;
+    }
+        #keyboard li.key-ebony {
+            margin-left: -21px;
+            padding-top: 100px;
+            z-index: 1000;
+        }
+        #keyboard li.pull-left {
+            margin-left: -21px;
+        }
